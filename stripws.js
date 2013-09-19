@@ -20,6 +20,8 @@ define(function(require, exports, module) {
         var save     = imports.save;
         var ui       = imports.ui;
 
+        var whitespaceUtil = require("ace/ext/whitespace");
+
         /***** Initialization *****/
 
         var plugin = new Plugin("Ajax.org", main.consumes);
@@ -75,6 +77,19 @@ define(function(require, exports, module) {
             }, plugin);
         }
 
+        /***** Methods *****/
+
+        function stripws(page) {
+            page = page || tabs.focussedPage;
+            if (!page || !page.path)
+                return;
+
+            var c9Session = page.document.getSession();
+            var session   = c9Session.session;
+            whitespaceUtil.trimTrailingSpace(session, true);
+            session.$syncInformUndoManager();
+        }
+
         /***** Lifecycle *****/
 
         plugin.on("load", function(){
@@ -91,34 +106,14 @@ define(function(require, exports, module) {
         });
 
         /***** Register and define API *****/
-
-        function stripws(page) {
-            page = page || tabs.focussedPage;
-            if (!page || !page.path)
-                return;
-
-            var c9Session = page.document.getSession();
-            var session = c9Session.session;
-            var doc = session.getDocument();
-            var lines = doc.getAllLines();
-
-            for (var i = 0, l=lines.length; i < l; i++) {
-                var line = lines[i];
-                var index = line.search(/\s+$/);
-
-                if (index !== -1)
-                    doc.removeInLine(i, index, line.length);
-            }
-            session.$syncInformUndoManager();
-        }
-
         /**
          * Strip whitespace extension for Cloud9 IDE
          **/
         plugin.freezePublicAPI({
             /*
              * Strips whitespace at the end of each line in the given page
-             * @page the page to stripws - apply on the currently focussed page, if nor passed
+             * @param {Page} page - The page to strip the whitespace from
+             * If not provided, the currently focussed page will be used instead
              */
             strpws: stripws
         });
