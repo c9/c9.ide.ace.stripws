@@ -5,16 +5,18 @@
  * @copyright 2013, Ajax.org B.V.
  */
 define(function(require, exports, module) {
-    main.consumes = ["plugin", "menus", "commands", "tabs", "settings",
-        "preferences", "save", "ui"];
+    main.consumes = [
+        "Plugin", "menus", "commands", "tabManager", "settings",
+        "preferences", "save", "ui"
+    ];
     main.provides = ["stripws"];
     return main;
 
     function main(options, imports, register) {
-        var Plugin   = imports.plugin;
+        var Plugin   = imports.Plugin;
         var menus    = imports.menus;
         var commands = imports.commands;
-        var tabs     = imports.tabs;
+        var tabs     = imports.tabManager;
         var settings = imports.settings;
         var prefs    = imports.preferences;
         var save     = imports.save;
