@@ -28,6 +28,8 @@ define(function(require, exports, module) {
 
         var plugin = new Plugin("Ajax.org", main.consumes);
         // var emit   = plugin.getEmitter();
+        
+        var disabled = false;
 
         var loaded = false;
         function load(){
@@ -83,7 +85,7 @@ define(function(require, exports, module) {
 
         function stripws(page) {
             page = page || tabs.focussedPage;
-            if (!page || !page.path)
+            if (!page || !page.path || disabled)
                 return;
 
             var c9Session = page.document.getSession();
@@ -98,10 +100,10 @@ define(function(require, exports, module) {
             load();
         });
         plugin.on("enable", function(){
-
+            disabled = false;
         });
         plugin.on("disable", function(){
-
+            disabled = true;
         });
         plugin.on("unload", function(){
             loaded = false;
