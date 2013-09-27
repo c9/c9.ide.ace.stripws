@@ -1,15 +1,9 @@
-/*
- * Strip whitespace extension for Cloud9 IDE
- *
- * @author Mostafa Eweda <mostafa@c9.io>
- * @copyright 2013, Ajax.org B.V.
- */
 define(function(require, exports, module) {
     main.consumes = [
         "Plugin", "menus", "commands", "tabManager", "settings",
         "preferences", "save", "ui"
     ];
-    main.provides = ["stripws"];
+    main.provides = ["ace.stripws"];
     return main;
 
     function main(options, imports, register) {
@@ -43,8 +37,8 @@ define(function(require, exports, module) {
                     stripws();
                 },
                 isAvailable : function (editor){
-                    return editor && tabs.focussedPage &&
-                        typeof tabs.focussedPage.path == "string";
+                    return editor && tabs.focussedTAb &&
+                        typeof tabs.focussedTab.path == "string";
                 }
             }, plugin);
 
@@ -58,8 +52,7 @@ define(function(require, exports, module) {
                 var shouldStrip = settings.getBool("user/general/@stripws");
                 if (!shouldStrip)
                     return;
-                var doc = e.document;
-                stripws(doc.page);
+                stripws(e.document.tab);
             }, plugin);
 
 
@@ -83,13 +76,12 @@ define(function(require, exports, module) {
 
         /***** Methods *****/
 
-        function stripws(page) {
-            page = page || tabs.focussedPage;
-            if (!page || !page.path || disabled)
+        function stripws(tab) {
+            tab = tab || tabs.focussedTab;
+            if (!tab || !tab.path || disabled)
                 return;
 
-            var c9Session = page.document.getSession();
-            var session   = c9Session.session;
+            var session = tab.document.getSession().session;
             whitespaceUtil.trimTrailingSpace(session, true);
             session.$syncInformUndoManager();
         }
@@ -110,20 +102,22 @@ define(function(require, exports, module) {
         });
 
         /***** Register and define API *****/
+        
         /**
-         * Strip whitespace extension for Cloud9 IDE
+         * Strips trailing whitespace from lines just before a file is saved.
+         * @singleton
          **/
         plugin.freezePublicAPI({
             /*
              * Strips whitespace at the end of each line in the given page
-             * @param {Page} page - The page to strip the whitespace from
-             * If not provided, the currently focussed page will be used instead
+             * @param {Tab} tab The tab to strip the whitespace from
+             * If not provided, the currently focussed tab will be used instead
              */
             strpws: stripws
         });
 
         register(null, {
-            stripws: plugin
+            "ace.stripws": plugin
         });
     }
 });
