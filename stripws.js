@@ -55,7 +55,6 @@ define(function(require, exports, module) {
                 stripws(e.document.tab);
             }, plugin);
 
-
             settings.on("read", function(e) {
                 settings.setDefaults("user/general", [["stripws", "false"]]);
             }, plugin);
