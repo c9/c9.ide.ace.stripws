@@ -37,7 +37,7 @@ define(function(require, exports, module) {
                     stripws();
                 },
                 isAvailable : function (editor){
-                    return editor && tabs.focussedTAb &&
+                    return editor && tabs.focussedTab &&
                         typeof tabs.focussedTab.path == "string";
                 }
             }, plugin);
