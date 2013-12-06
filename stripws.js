@@ -48,7 +48,7 @@ define(function(require, exports, module) {
 
             menus.addItemByPath("Tools/~", new ui.divider(), 200, plugin);
 
-            save.on("before.save", function (e) {
+            save.on("beforeSave", function (e) {
                 var shouldStrip = settings.getBool("user/general/@stripws");
                 if (!shouldStrip)
                     return;
