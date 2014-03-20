@@ -60,9 +60,10 @@ define(function(require, exports, module) {
             }, plugin);
 
             prefs.add({
-               "General" : {
-                    position : 100,
-                    "General" : {
+               "File" : {
+                    position : 150,
+                    "Whitespace" : {
+                        position : 500,
                         "On Save, Strip Whitespace" : {
                             type     : "checkbox",
                             position : 900,
