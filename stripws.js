@@ -7,21 +7,21 @@ define(function(require, exports, module) {
     return main;
 
     function main(options, imports, register) {
-        var Plugin   = imports.Plugin;
-        var menus    = imports.menus;
+        var Plugin = imports.Plugin;
+        var menus = imports.menus;
         var commands = imports.commands;
-        var tabs     = imports.tabManager;
+        var tabs = imports.tabManager;
         var settings = imports.settings;
-        var prefs    = imports.preferences;
-        var save     = imports.save;
-        var ui       = imports.ui;
+        var prefs = imports.preferences;
+        var save = imports.save;
+        var ui = imports.ui;
 
         var whitespaceUtil = require("ace/ext/whitespace");
 
         /***** Initialization *****/
 
         var plugin = new Plugin("Ajax.org", main.consumes);
-        // var emit   = plugin.getEmitter();
+        // var emit = plugin.getEmitter();
         
         var disabled = false;
 
@@ -31,19 +31,19 @@ define(function(require, exports, module) {
             loaded = true;
 
             commands.addCommand({
-                name        : "stripws",
-                hint        : "strip whitespace at the end of each line",
-                exec        : function(){
+                name: "stripws",
+                hint: "strip whitespace at the end of each line",
+                exec: function(){
                     stripws();
                 },
-                isAvailable : function (editor){
+                isAvailable: function (editor) {
                     return editor && tabs.focussedTab &&
                         typeof tabs.focussedTab.path == "string";
                 }
             }, plugin);
 
             menus.addItemByPath("Tools/Strip Trailing Space", new ui.item({
-                command : "stripws"
+                command: "stripws"
             }), 100, plugin);
 
             menus.addItemByPath("Tools/~", new ui.divider(), 200, plugin);
@@ -61,13 +61,13 @@ define(function(require, exports, module) {
 
             prefs.add({
                "File" : {
-                    position : 150,
+                    position: 150,
                     "Whitespace" : {
-                        position : 500,
+                        position: 500,
                         "On Save, Strip Whitespace" : {
-                            type     : "checkbox",
-                            position : 900,
-                            path     : "user/general/@stripws"
+                            type: "checkbox",
+                            position: 900,
+                            path: "user/general/@stripws"
                         }
                     }
                }
