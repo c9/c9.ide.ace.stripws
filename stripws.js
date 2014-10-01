@@ -50,7 +50,7 @@ define(function(require, exports, module) {
 
             save.on("beforeSave", function (e) {
                 var shouldStrip = settings.getBool("user/general/@stripws");
-                if (!shouldStrip)
+                if (!shouldStrip || e.options.silentsave)
                     return;
                 stripws(e.document.tab);
             }, plugin);
