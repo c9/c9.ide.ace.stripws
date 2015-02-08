@@ -9,14 +9,12 @@
         "url": "http://github.com/c9/c9.ide.ace.stripws.git"
     },
     "plugins": {
-        "plugin": {
-            "stripws": {}
-        }
+        "stripws": {}
     },
     "categories": [
         "core"
     ],
     "licenses": [
-        ""
+        "MIT"
     ]
 }
