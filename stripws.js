@@ -49,25 +49,26 @@ define(function(require, exports, module) {
             menus.addItemByPath("Tools/~", new ui.divider(), 200, plugin);
 
             save.on("beforeSave", function (e) {
-                var shouldStrip = settings.getBool("user/general/@stripws");
+                var shouldStrip = settings.getBool("project/general/@stripws");
                 if (!shouldStrip || e.options.silentsave)
                     return;
                 stripws(e.document.tab);
             }, plugin);
 
             settings.on("read", function(e) {
-                settings.setDefaults("user/general", [["stripws", "false"]]);
+                settings.setDefaults("project/general", [
+                    ["stripws", !!settings.getBool("user/general/@stripws")]
+                ]);
             }, plugin);
 
             prefs.add({
-               "File" : {
+               "Project" : {
                     position: 150,
-                    "Whitespace" : {
-                        position: 500,
+                    "Code Editor (Ace)" : {
                         "On Save, Strip Whitespace" : {
                             type: "checkbox",
                             position: 900,
-                            path: "user/general/@stripws"
+                            path: "project/general/@stripws"
                         }
                     }
                }
