@@ -52,7 +52,9 @@ define(function(require, exports, module) {
                 var shouldStrip = settings.getBool("project/general/@stripws");
                 if (!shouldStrip || e.options.silentsave)
                     return;
-                stripws(e.document.tab);
+                stripws(e.document.tab, {
+                    keepCursorPosition: true
+                });
             }, plugin);
 
             settings.on("read", function(e) {
@@ -77,13 +79,15 @@ define(function(require, exports, module) {
 
         /***** Methods *****/
 
-        function stripws(tab) {
+        function stripws(tab, options) {
             tab = tab || tabs.focussedTab;
             if (!tab || !tab.path || disabled)
                 return;
 
+            options = options || {};
+            options.trimEmpty = true;
             var session = tab.document.getSession().session;
-            whitespaceUtil.trimTrailingSpace(session, true);
+            whitespaceUtil.trimTrailingSpace(session, options);
             session.$syncInformUndoManager();
         }
 
