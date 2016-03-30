@@ -52,8 +52,9 @@ define(function(require, exports, module) {
                 var shouldStrip = settings.getBool("project/general/@stripws");
                 if (!shouldStrip || e.options.silentsave)
                     return;
+                var keepCursorPosition = settings.getBool("user/general/@stripwsKeepCursorPosition");
                 stripws(e.document.tab, {
-                    keepCursorPosition: true
+                    keepCursorPosition: keepCursorPosition
                 });
             }, plugin);
 
