@@ -26,14 +26,14 @@ define(function(require, exports, module) {
         var disabled = false;
 
         var loaded = false;
-        function load(){
+        function load() {
             if (loaded) return false;
             loaded = true;
 
             commands.addCommand({
                 name: "stripws",
                 hint: "strip whitespace at the end of each line",
-                exec: function(){
+                exec: function() {
                     stripws();
                 },
                 isAvailable: function (editor) {
@@ -65,10 +65,10 @@ define(function(require, exports, module) {
             }, plugin);
 
             prefs.add({
-               "Project" : {
+               "Project": {
                     position: 150,
-                    "Code Editor (Ace)" : {
-                        "On Save, Strip Whitespace" : {
+                    "Code Editor (Ace)": {
+                        "On Save, Strip Whitespace": {
                             type: "checkbox",
                             position: 900,
                             path: "project/general/@stripws"
@@ -94,16 +94,16 @@ define(function(require, exports, module) {
 
         /***** Lifecycle *****/
 
-        plugin.on("load", function(){
+        plugin.on("load", function() {
             load();
         });
-        plugin.on("enable", function(){
+        plugin.on("enable", function() {
             disabled = false;
         });
-        plugin.on("disable", function(){
+        plugin.on("disable", function() {
             disabled = true;
         });
-        plugin.on("unload", function(){
+        plugin.on("unload", function() {
             loaded = false;
         });
 
